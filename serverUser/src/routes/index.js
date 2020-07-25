@@ -18,7 +18,7 @@ router.post('/upload', (req, res) => {
 
           form.append('image', fs.createReadStream(req.file.path));
           // La url para contenedores es: 'http://files:8081/'
-          axios.post('http://localhost:8081/', form, {
+          axios.post('http://files:8081/', form, {
                headers: {
                     'Content-Type': `multipart/form-data; boundary=${form._boundary}`
                }

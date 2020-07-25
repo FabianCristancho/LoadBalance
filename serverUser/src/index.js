@@ -6,7 +6,7 @@ const uuid = require('uuid');
 
 
 const storage = multer.diskStorage({
-     destination: path.join(__dirname, '../public'),
+     destination: path.join(__dirname, '/public'),
      filename: (req, file, cb) => {
          cb(null, uuid.v4() + path.extname(file.originalname).toLowerCase());
      }
@@ -18,6 +18,7 @@ const port = 3000
 //settings
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+app.use(express.static(__dirname + '../public'));
 
 //middleware
 app.use(multer({

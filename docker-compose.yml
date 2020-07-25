@@ -1,0 +1,12 @@
+version: '3'
+services:
+  nodejs:
+    image: serveruserlb:latest
+    container_name: middleware_lb
+    ports:
+      - "3997:3000"
+  files:
+    image: serverfileslb:latest
+    container_name: files_lb
+    ports:
+      - "8081:8081"
