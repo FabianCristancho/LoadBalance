@@ -25,6 +25,9 @@
                               </form>
                          </div>
                     </div>
+                    <div class="col-md-12 mb-4 mt-4">
+                         <img class="img-fluid" src="http://localhost:<%= pathImage %> " alt="" >
+                    </div>
                </div>
                <div class="col-md-6">
                     <div class="card mt-5">
@@ -35,19 +38,29 @@
                               <table class="table table-bordered">
                                    <thead>
                                         <tr>
+                                             <th>Id</th>
                                              <th>Nombre de Imagen</th>
                                              <th>Tamaño</th>
                                              <th>Servidor</th>
                                              <th></th>
                                         </tr>
                                    </thead>
-                                   <tbody></tbody>
+                                   <tbody>
+                                        <% for(var i = 0; i < rows.length; i++){ %> 
+                                             <tr>
+                                                  <td><%- rows[i].id %> </td>
+                                                  <td><%= rows[i].original_name %> </td>
+                                                  <td><%= rows[i].size %> </td>
+                                                  <td><%= rows[i].server %> </td>
+                                                  <td><a href="/image?code=<%= rows[i].code_name %>&server=<%= rows[i].server %> " class="btn btn-info">Ver imagen</a></td>
+                                             </tr>
+                                        <% } %> 
+                                   </tbody>
                               </table>
                          </div>
                     </div>
                </div>
           </div>
-          <img src="http://localhost:8081/bb.png" alt="ddsd">
      </div>
 
      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
