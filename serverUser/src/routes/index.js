@@ -59,7 +59,7 @@ router.post('/upload', (req, res) => {
 
                          connection.query("INSERT INTO images(original_name, code_name, size,server) VALUES ('"+req.file.originalname +"','" +req.file.filename +"'," +req.file.size +",'" +serverLower +"')", (err, result) => {
                               if(result){
-                                   console.log('Los datos de la donacion se han agregado correctamente');
+                                   console.log('Los datos de la imagen se han agregado correctamente');
                               }else{
                                    console.log('Ha ocurrido un problema al insertar los datos de la donacion')
                                    console.log(err);
@@ -79,33 +79,6 @@ router.post('/upload', (req, res) => {
                     console.log("Se ha sobrepasado las 10MB");
                }
           })
-
-          /*
-          axios.get('http://localhost:8081/sizeFolder').then(function (response) {
-               console.log('Recibido tamaño de archivo');
-               console.log(response.data);
-          })
-          .catch(function (response) {
-               console.log(response.data);
-          });*/
-          /*
-          form.append('image', fs.createReadStream(req.file.path));
-          // La url para contenedores es: 'http://files:8081/'
-          axios.post('http://localhost:8081/', form, {
-               headers: {
-                    'Content-Type': `multipart/form-data; boundary=${form._boundary}`
-               }
-          }).then(function (response) {
-               console.log('La imagen se ha enviado de forma satisfactoria')
-               console.log(response.data);
-          })
-          .catch(function (response) {
-               console.log(response.data);
-          }); 
-          fs.unlink(req.file.path, (err) => {
-               if(err) throw err;
-               console.log('Limpiando el servidor');
-          });*/
      }
      res.redirect('/');
 });
