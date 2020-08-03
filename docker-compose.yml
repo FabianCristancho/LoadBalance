@@ -1,12 +1,49 @@
 version: '3'
 services:
+  db:
+    image: mysql:latest
+    command: mysqld --default-authentication-plugin=mysql_native_password
+    container_name: db
+    ports: 
+      - "3307:3306"
+    networks:
+      - net
+    expose:
+      - '3307'
+    environment:
+        MYSQL_USER: root
+        MYSQL_ROOT_PASSWORD: admin123
+        MYSQL_DATABASE: load_balance_images
+    volumes:
+      - "./serverDatabase/sql/database.sql:/docker-entrypoint-initdb.d/database.sql"
   nodejs:
     image: serveruserlb:latest
     container_name: middleware_lb
     ports:
       - "3997:3000"
-  files:
+    networks:
+      - net
+  server1:
     image: serverfileslb:latest
-    container_name: files_lb
+    container_name: files1_lb
     ports:
       - "8081:8081"
+    networks:
+      - net
+  server2:
+    image: serverfileslb1:latest
+    container_name: files2_lb
+    ports:
+      - "8083:8083"
+    networks:
+      - net
+  server3:
+    image: serverfileslb2:latest
+    container_name: files3_lb
+    ports:
+      - "8085:8085"
+    networks:
+      - net
+
+networks:
+  net:

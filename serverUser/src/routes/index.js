@@ -50,7 +50,7 @@ router.post('/upload', (req, res) => {
                if(lowerSize < 9.5e7){
                     form.append('image', fs.createReadStream(req.file.path));
                     // La url para contenedores es: 'http://files:8081/'
-                    axios.post('http://localhost:'+serverLower, form, {
+                    axios.post('http://'+serverLower, form, {
                          headers: {
                               'Content-Type': `multipart/form-data; boundary=${form._boundary}`
                          }
@@ -86,7 +86,7 @@ router.post('/upload', (req, res) => {
 function soliciteSizeFile(server){
      return new Promise(function(resolve, reject){
           let size = 0;
-          axios.get('http://localhost:'+server+'/sizeFolder').then(function (response) {
+          axios.get('http://'+server+'/sizeFolder').then(function (response) {
                console.log('Recibido tamaño de archivo, server '+server);
                console.log(response.data);
                size = parseInt(response.data, 10);
@@ -102,13 +102,19 @@ function soliciteSizeFile(server){
 function getSizeServersFolder(){
      return new Promise(function(resolve, reject){
           let array = [];
-          soliciteSizeFile(8081).then((res) => {
+	  console.log("Antes de server 1");
+          soliciteSizeFile("server1:8081").then((res) => {
+	       console.log("entra a server 1 8083");
                array.push(res);
           }).then((res) => {
-	       soliciteSizeFile(8083).then((res) => {
+	       console.log("antes server 2");
+	       soliciteSizeFile("server2:8083").then((res) => {
+	         console.log("entra a server 2");
                	 array.push(res);
                }).then((res) => {
-                    soliciteSizeFile(8084).then((res) => {
+	            console.log("antes server 3");
+                    soliciteSizeFile("server3:8085").then((res) => {
+	                 console.log("entra a server 3");
                          array.push(res);
                    }).then((res) => {
                         resolve(array);
@@ -120,11 +126,11 @@ function getSizeServersFolder(){
 
 function getLowerServer(sizeServer1, sizeServer2, sizeServer3){
      if(sizeServer1<sizeServer2 && sizeServer1<sizeServer3){
-          return "8081";
+          return "server1:8081";
      }else if(sizeServer2<sizeServer3){
-          return "8083";
+          return "server2:8083";
      }
-     return "8084";
+     return "server3:8085";
 }
 
 function getLowerSize(sizeServer1, sizeServer2, sizeServer3){

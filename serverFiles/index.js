@@ -42,6 +42,7 @@ app.post("/", async (request, response) => {
 
  app.get("/sizeFolder", async (req, res) => {
      let size = await du(__dirname + '/public/uploads');
+     console.log("llega la solicitud ");
      console.log("Size is: " +size);
      res.send("" +size);
  });
